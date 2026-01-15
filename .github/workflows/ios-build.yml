@@ -24,4 +24,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build iOS
-        run: ./gradlew clean :composeApp:iosSimulatorArm64Bin --stacktrace
+        run: ./gradlew :composeApp:iosSimulatorArm64Bin --no-build-cache --stacktrace

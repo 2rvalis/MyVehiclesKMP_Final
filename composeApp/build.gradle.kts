@@ -13,6 +13,7 @@ kotlin {
 
     androidTarget()
 
+    // iOS Targets
     listOf(
         iosX64(),
         iosArm64(),
@@ -37,7 +38,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            // Room
+            // Room Dependencies
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
 
@@ -52,13 +53,22 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
+        // ΔΙΟΡΘΩΣΗ: Δημιουργούμε το iosMain και συνδέουμε τα targets ρητά
         val iosMain by creating {
             dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.androidx.room.runtime)
+            }
         }
 
         val iosX64Main by getting { dependsOn(iosMain) }
         val iosArm64Main by getting { dependsOn(iosMain) }
         val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
+    }
+
+    compilerOptions {
+        // Απαραίτητο για το Kotlin 2.0.21+ και KMP
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
 
@@ -87,7 +97,7 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Room KSP - Το "kspCommonMainMetadata" είναι το κλειδί για το iOS build
+    // Room KSP - Κρίσιμο για την παραγωγή κώδικα στο iOS
     add("kspCommonMainMetadata", libs.androidx.room.compiler)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
@@ -96,12 +106,6 @@ dependencies {
 }
 
 ksp {
+    // Ορίζουμε πού θα αποθηκεύονται τα σχήματα της βάσης δεδομένων
     arg("room.schemaLocation", "${projectDir}/schemas")
-}
-
-kotlin {
-    compilerOptions {
-        // Αυτό αντικαθιστά το παλιό kotlinOptions
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
 }
