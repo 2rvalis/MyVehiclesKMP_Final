@@ -24,4 +24,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build iOS
-        run: ./gradlew :composeApp:iosSimulatorArm64Bin --info
+          run: ./gradlew :composeApp:iosSimulatorArm64Bin --no-daemon --no-build-cache
