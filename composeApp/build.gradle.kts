@@ -99,8 +99,9 @@ ksp {
     arg("room.schemaLocation", "${projectDir}/schemas")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-Xexpect-actual-classes"
+kotlin {
+    compilerOptions {
+        // Αυτό αντικαθιστά το παλιό kotlinOptions
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
