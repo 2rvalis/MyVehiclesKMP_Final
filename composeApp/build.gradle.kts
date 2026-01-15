@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -14,7 +13,6 @@ kotlin {
 
     androidTarget()
 
-    // iOS Targets για iPhone 14 και GitHub Actions
     listOf(
         iosX64(),
         iosArm64(),
@@ -35,14 +33,15 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.1")
+
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            // Room Dependencies για KMP
+            // Room
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
 
-            implementation("io.coil-kt.coil3:coil-compose:3.0.0-rc01")
+            implementation(libs.coil.compose)
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.8.0-alpha10")
         }
 
@@ -51,19 +50,12 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.core.ktx)
-            implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-rc01")
         }
 
-        // ΔΙΟΡΘΩΣΗ: Σωστή σύνδεση του iosMain με τα targets
         val iosMain by creating {
             dependsOn(commonMain.get())
-            dependencies {
-                implementation(libs.androidx.room.runtime)
-            }
         }
 
-        // Αυτές οι γραμμές λένε στην Kotlin ότι ο φάκελος iosMain
-        // ανήκει σε όλα τα iOS targets (Simulator και κανονικό iPhone)
         val iosX64Main by getting { dependsOn(iosMain) }
         val iosArm64Main by getting { dependsOn(iosMain) }
         val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
@@ -86,11 +78,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -100,7 +87,8 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // KSP για όλες τις πλατφόρμες (ΑΠΑΡΑΙΤΗΤΟ για τη Room)
+    // Room KSP - Το "kspCommonMainMetadata" είναι το κλειδί για το iOS build
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
