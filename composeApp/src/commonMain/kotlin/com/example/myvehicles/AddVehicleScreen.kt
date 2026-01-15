@@ -1,14 +1,10 @@
 package com.example.myvehicles
 
 import Vehicle
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -44,9 +40,7 @@ fun AddVehicleScreen(onSave: (Vehicle) -> Unit, onCancel: () -> Unit) {
     var registrationPath by remember { mutableStateOf<String?>(null) }
     var insurancePath by remember { mutableStateOf<String?>(null) }
 
-    val mainImageLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        imagePath = uri?.toString()
-    }
+    val picker = getFilePicker()
 
     Scaffold(
         topBar = {
@@ -65,9 +59,11 @@ fun AddVehicleScreen(onSave: (Vehicle) -> Unit, onCancel: () -> Unit) {
                                 kteoDate = kteoDate, tireSize = tireSize,
                                 pressureFrontPsi = pressureFrontPsi, pressureFrontBar = pressureFrontBar,
                                 pressureBackPsi = pressureBackPsi, pressureBackBar = pressureBackBar,
-                                serviceInfo = serviceInfo, imagePath = imagePath,
-                                licensePlatePath = licensePlatePath, registrationPath = registrationPath,
-                                insurancePath = insurancePath
+                                serviceInfo = serviceInfo,
+                                imagePath = imagePath ?: "",
+                                licensePlatePath = licensePlatePath ?: "",
+                                registrationPath = registrationPath ?: "",
+                                insurancePath = insurancePath ?: ""
                             ))
                         }
                     }) {
@@ -81,7 +77,9 @@ fun AddVehicleScreen(onSave: (Vehicle) -> Unit, onCancel: () -> Unit) {
 
             Box(
                 modifier = Modifier.fillMaxWidth().height(200.dp).clip(RoundedCornerShape(12.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant).clickable { mainImageLauncher.launch("image/*") },
+                    .background(MaterialTheme.colorScheme.surfaceVariant).clickable {
+                        picker.pickImage { path -> imagePath = path }
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 if (imagePath != null) {
@@ -115,7 +113,6 @@ fun AddVehicleScreen(onSave: (Vehicle) -> Unit, onCancel: () -> Unit) {
 
             Spacer(Modifier.height(24.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                // Χρήση της DocumentBox που ορίζεται στο VehicleDetailScreen ή ως private εδώ
                 AddDocBox("Πινακίδα", licensePlatePath) { licensePlatePath = it }
                 AddDocBox("Άδεια", registrationPath) { registrationPath = it }
                 AddDocBox("Ασφάλεια", insurancePath) { insurancePath = it }
@@ -125,12 +122,12 @@ fun AddVehicleScreen(onSave: (Vehicle) -> Unit, onCancel: () -> Unit) {
 }
 
 @Composable
-fun AddDocBox(label: String, path: String?, onSelected: (String) -> Unit) {
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let { onSelected(it.toString()) }
-    }
+fun AddDocBox(label: String, path: String?, onSelected: (String?) -> Unit) {
+    val picker = getFilePicker()
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(modifier = Modifier.size(80.dp).clip(RoundedCornerShape(8.dp)).background(Color.LightGray).clickable { launcher.launch("*/*") }, contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.size(80.dp).clip(RoundedCornerShape(8.dp)).background(Color.LightGray).clickable {
+            picker.pickFile { onSelected(it) }
+        }, contentAlignment = Alignment.Center) {
             if (path != null) {
                 if (path.contains("pdf")) Icon(Icons.Default.PictureAsPdf, null, tint = Color.Red)
                 else AsyncImage(model = path, contentDescription = null, contentScale = ContentScale.Crop)
