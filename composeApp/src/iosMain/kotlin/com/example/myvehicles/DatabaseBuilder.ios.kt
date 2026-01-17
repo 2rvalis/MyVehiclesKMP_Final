@@ -5,10 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import platform.Foundation.NSHomeDirectory
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
     val dbFilePath = NSHomeDirectory() + "/my_vehicles.db"
-    return Room.databaseBuilder<AppDatabase>(
+    return Room.databaseBuilder<VehicleDatabase>(
         name = dbFilePath,
-        factory = { AppDatabase::class.instantiateImpl() } // Αυτό έλειπε και έβγαζε σφάλμα
+        factory = { VehicleDatabase::class.instantiateImpl() }
     ).setDriver(BundledSQLiteDriver())
 }
