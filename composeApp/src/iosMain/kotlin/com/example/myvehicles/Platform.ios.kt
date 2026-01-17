@@ -17,4 +17,6 @@ class IOSFilePicker : FilePicker {
 @Composable
 actual fun getFilePicker(): FilePicker = IOSFilePicker()
 
-actual fun openFilePlatform(path: String?) {}
+actual fun openFilePlatform(path: String?) {
+    // Κενό για το iOS build
+}
