@@ -15,5 +15,3 @@ abstract class VehicleDatabase : RoomDatabase() {
 expect object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
     override fun initialize(): VehicleDatabase
 }
-
-// ΤΕΛΙΚΟ ΤΕΣΤ ΓΙΑ ΤΟ GIT #@

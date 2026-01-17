@@ -6,5 +6,3 @@ import androidx.room.RoomDatabaseConstructor
 actual object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
     actual override fun initialize(): VehicleDatabase = throw NotImplementedError()
 }
-
-// ΤΕΛΙΚΟ ΤΕΣΤ ΓΙΑ ΤΟ GIT #@
