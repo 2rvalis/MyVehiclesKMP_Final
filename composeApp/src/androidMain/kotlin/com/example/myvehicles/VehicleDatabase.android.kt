@@ -3,6 +3,6 @@ package com.example.myvehicles
 import androidx.room.RoomDatabaseConstructor
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")
-actual object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
+actual object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
     actual override fun initialize(): VehicleDatabase = throw NotImplementedError()
 }

@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.googleKsp)
-    // Προσθήκη του Room Plugin (βεβαιώσου ότι η έκδοση συμβαδίζει με τα libs σου)
     id("androidx.room") version "2.7.0-alpha11"
 }
 
@@ -19,7 +18,6 @@ kotlin {
         }
     }
 
-    // iOS Targets
     listOf(
         iosX64(),
         iosArm64(),
@@ -62,18 +60,12 @@ kotlin {
         val iosMain by creating {
             dependsOn(commonMain.get())
             dependencies {
-                // Απαραίτητο για το Room runtime στο iOS
                 implementation(libs.androidx.room.runtime)
             }
         }
-
-        val iosX64Main by getting { dependsOn(iosMain) }
-        val iosArm64Main by getting { dependsOn(iosMain) }
-        val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
     }
 
     compilerOptions {
-        // Απαραίτητο για το Kotlin 2.0+
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
@@ -100,21 +92,17 @@ android {
     }
 }
 
-// Ρύθμιση του Room Plugin
 room {
     schemaDirectory("$projectDir/schemas")
 }
 
+// ΔΙΟΡΘΩΜΕΝΟ BLOCK DEPENDENCIES
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Room KSP Configurations
+    // Χρησιμοποιούμε ksp() για να εφαρμοστεί αυτόματα σε όλα τα targets
+    // Αυτό αντικαθιστά τα kspCommonMainMetadata, kspAndroid, κλπ.
     val roomCompiler = libs.androidx.room.compiler
-
-    // Η κρίσιμη γραμμή για να "βλέπει" το iOS το instantiateImpl
-    add("kspCommonMainMetadata", roomCompiler)
-
-    // KSP για κάθε target ξεχωριστά
     add("kspAndroid", roomCompiler)
     add("kspIosSimulatorArm64", roomCompiler)
     add("kspIosArm64", roomCompiler)
