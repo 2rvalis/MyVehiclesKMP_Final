@@ -7,7 +7,7 @@ import androidx.room.RoomDatabaseConstructor
 
 @Database(entities = [Vehicle::class], version = 3, exportSchema = false)
 @ConstructedBy(VehicleDatabaseConstructor::class)
-abstract class VehicleDatabase : RoomDatabase() {
+expect abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
 
