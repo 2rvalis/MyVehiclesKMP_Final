@@ -58,7 +58,7 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
-        // ΣΩΣΤΗ ΡΥΘΜΙΣΗ IOS SOURCE SETS
+        // Ρύθμιση iOS Source Sets
         val iosMain by creating {
             dependsOn(commonMain.get())
             dependencies {
@@ -66,13 +66,13 @@ kotlin {
             }
         }
 
-        // Σύνδεση των ειδικών iOS targets με το iosMain
         iosX64Main.get().dependsOn(iosMain)
         iosArm64Main.get().dependsOn(iosMain)
         iosSimulatorArm64Main.get().dependsOn(iosMain)
     }
 
     compilerOptions {
+        // Απαραίτητο για το expect/actual pattern στη Room 2.7.0+
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
@@ -99,14 +99,17 @@ android {
     }
 }
 
+// Κρίσιμη ρύθμιση για τη Room
 room {
     schemaDirectory("$projectDir/schemas")
+    // ΔΙΟΡΘΩΣΗ: Αναγκάζει τη Room να παράγει Kotlin κώδικα (λύνει το Unresolved reference <init>)
+    generateKotlin = true
 }
 
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Room KSP Configurations - Στοχεύουμε στα platform targets απευθείας
+    // Room KSP Configurations για κάθε target
     val roomCompiler = libs.androidx.room.compiler
     add("kspAndroid", roomCompiler)
     add("kspIosSimulatorArm64", roomCompiler)
