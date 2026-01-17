@@ -18,6 +18,7 @@ kotlin {
         }
     }
 
+    // iOS Targets
     listOf(
         iosX64(),
         iosArm64(),
@@ -57,12 +58,18 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
+        // ΣΩΣΤΗ ΡΥΘΜΙΣΗ IOS SOURCE SETS
         val iosMain by creating {
             dependsOn(commonMain.get())
             dependencies {
                 implementation(libs.androidx.room.runtime)
             }
         }
+
+        // Σύνδεση των ειδικών iOS targets με το iosMain
+        iosX64Main.get().dependsOn(iosMain)
+        iosArm64Main.get().dependsOn(iosMain)
+        iosSimulatorArm64Main.get().dependsOn(iosMain)
     }
 
     compilerOptions {
@@ -96,12 +103,10 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-// ΔΙΟΡΘΩΜΕΝΟ BLOCK DEPENDENCIES
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Χρησιμοποιούμε ksp() για να εφαρμοστεί αυτόματα σε όλα τα targets
-    // Αυτό αντικαθιστά τα kspCommonMainMetadata, kspAndroid, κλπ.
+    // Room KSP Configurations - Στοχεύουμε στα platform targets απευθείας
     val roomCompiler = libs.androidx.room.compiler
     add("kspAndroid", roomCompiler)
     add("kspIosSimulatorArm64", roomCompiler)
