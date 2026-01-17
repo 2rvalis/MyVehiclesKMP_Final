@@ -11,11 +11,8 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
     val dbFilePath = NSHomeDirectory() + "/my_vehicles.db"
     return Room.databaseBuilder<VehicleDatabase>(
         name = dbFilePath,
-        factory = { instantiateImpl() } // Χωρίς το VehicleDatabase::class μπροστά
+        factory = {  // Χρησιμοποιούμε το ανώνυμο factory που παράγει η Room
+            VehicleDatabase::class.instantiateImpl()
+        }
     ).setDriver(BundledSQLiteDriver())
-}
-
-// Αυτό το "κόλπο" βοηθάει τον compiler του iOS να βρει τη γεννημένη κλάση
-private fun instantiateImpl(): VehicleDatabase {
-    return VehicleDatabase::class.instantiateImpl()
 }

@@ -120,3 +120,9 @@ dependencies {
     add("kspIosArm64", roomCompiler)
     add("kspIosX64", roomCompiler)
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile>().configureEach {
+    dependsOn("kspKotlinIosSimulatorArm64")
+    dependsOn("kspKotlinIosArm64")
+    dependsOn("kspKotlinIosX64")
+}
