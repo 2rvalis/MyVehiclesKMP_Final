@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import platform.Foundation.NSHomeDirectory
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
+// Προσθέσαμε τη λέξη 'actual' και το σωστό return type
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
     val dbFilePath = NSHomeDirectory() + "/my_vehicles.db"
     return Room.databaseBuilder<VehicleDatabase>(
         name = dbFilePath,
