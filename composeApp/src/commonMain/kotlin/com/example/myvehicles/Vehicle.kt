@@ -21,3 +21,5 @@ data class Vehicle(
     val registrationPath: String? = null,
     val insurancePath: String? = null
 )
+
+// lala
