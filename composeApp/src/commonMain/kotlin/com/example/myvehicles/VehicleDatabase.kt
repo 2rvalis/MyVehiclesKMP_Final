@@ -11,7 +11,6 @@ abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
 
-// Η υπόσχεση (expect) ότι θα υπάρχει ένας constructor
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
     override fun initialize(): VehicleDatabase
