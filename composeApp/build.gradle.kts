@@ -1,15 +1,23 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.googleKsp)
+    // Προσθήκη του Room Plugin (βεβαιώσου ότι η έκδοση συμβαδίζει με τα libs σου)
+    id("androidx.room") version "2.7.0-alpha11"
 }
 
 kotlin {
     jvmToolchain(17)
 
-    androidTarget()
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
 
     // iOS Targets
     listOf(
@@ -51,10 +59,10 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
-        // ΔΙΟΡΘΩΣΗ: Δημιουργούμε το iosMain και συνδέουμε τα targets ρητά
         val iosMain by creating {
             dependsOn(commonMain.get())
             dependencies {
+                // Απαραίτητο για το Room runtime στο iOS
                 implementation(libs.androidx.room.runtime)
             }
         }
@@ -65,7 +73,7 @@ kotlin {
     }
 
     compilerOptions {
-        // Απαραίτητο για το Kotlin 2.0.21+ και KMP
+        // Απαραίτητο για το Kotlin 2.0+
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
@@ -92,18 +100,23 @@ android {
     }
 }
 
+// Ρύθμιση του Room Plugin
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Room KSP - Μόνο για τα απαραίτητα targets
+    // Room KSP Configurations
     val roomCompiler = libs.androidx.room.compiler
+
+    // Η κρίσιμη γραμμή για να "βλέπει" το iOS το instantiateImpl
+    add("kspCommonMainMetadata", roomCompiler)
+
+    // KSP για κάθε target ξεχωριστά
     add("kspAndroid", roomCompiler)
     add("kspIosSimulatorArm64", roomCompiler)
     add("kspIosArm64", roomCompiler)
     add("kspIosX64", roomCompiler)
-}
-
-ksp {
-    // Ορίζουμε πού θα αποθηκεύονται τα σχήματα της βάσης δεδομένων
-    arg("room.schemaLocation", "${projectDir}/schemas")
 }
