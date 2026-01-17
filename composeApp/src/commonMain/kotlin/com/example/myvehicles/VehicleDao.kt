@@ -25,3 +25,5 @@ interface VehicleDao {
     @Delete
     suspend fun delete(vehicle: Vehicle)
 }
+
+//Αλλαξε το Int σε Long εδώ
