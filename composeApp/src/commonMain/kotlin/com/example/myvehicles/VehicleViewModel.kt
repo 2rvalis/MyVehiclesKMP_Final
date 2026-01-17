@@ -1,6 +1,6 @@
 package com.example.myvehicles
 
-import Vehicle
+import com.example.myvehicles.Vehicle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
@@ -24,7 +24,7 @@ class VehicleViewModel(private val repository: VehicleRepository) : ViewModel() 
         repository.delete(vehicle)
     }
 
-    fun getVehicleById(id: Int): Flow<Vehicle?> {
+    fun getVehicleById(id: Long): Flow<Vehicle?> {
         return repository.getVehicleById(id)
     }
 
