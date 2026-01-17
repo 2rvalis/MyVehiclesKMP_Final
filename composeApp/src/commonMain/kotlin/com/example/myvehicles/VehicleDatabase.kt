@@ -11,5 +11,6 @@ abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
 
+// Αυτό το αντικείμενο θα υλοποιηθεί αυτόματα από το KSP για κάθε πλατφόρμα
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase>
