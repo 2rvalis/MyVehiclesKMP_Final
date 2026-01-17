@@ -1,2 +1,8 @@
 package com.example.myvehicles
-// Μην βάλεις τίποτα άλλο εδώ, το KSP θα φτιάξει το "actual object" αυτόματα για το Android
+
+import androidx.room.RoomDatabaseConstructor
+
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+actual object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
+    actual override fun initialize(): VehicleDatabase = throw NotImplementedError()
+}

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabaseConstructor
 
 @Database(entities = [Vehicle::class], version = 3, exportSchema = false)
 @ConstructedBy(AppDatabaseConstructor::class)
-// ΔΙΟΡΘΩΣΗ: Αφαίρεσε τις παρενθέσεις () μετά το RoomDatabase
+// ΔΙΟΡΘΩΣΗ: Όχι παρενθέσεις στο RoomDatabase
 expect abstract class VehicleDatabase : RoomDatabase {
     abstract fun vehicleDao(): VehicleDao
 }
