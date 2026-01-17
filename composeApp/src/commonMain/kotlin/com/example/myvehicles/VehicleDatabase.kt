@@ -13,4 +13,6 @@ abstract class VehicleDatabase : RoomDatabase() {
 
 // Αυτό το αντικείμενο θα υλοποιηθεί αυτόματα από το KSP για κάθε πλατφόρμα
 @Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase>
+expect object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
+    override fun initialize(): VehicleDatabase
+}
