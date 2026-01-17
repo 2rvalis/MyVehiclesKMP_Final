@@ -14,7 +14,7 @@ interface VehicleDao {
     fun getAllVehicles(): Flow<List<Vehicle>>
 
     @Query("SELECT * FROM vehicles WHERE id = :id LIMIT 1")
-    fun getVehicleById(id: Int): Flow<Vehicle?>
+    fun getVehicleById(id: Long): Flow<Vehicle?> // Αλλαξε το Int σε Long εδώ
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vehicle: Vehicle)
