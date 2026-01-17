@@ -7,4 +7,4 @@ actual object VehicleDatabaseConstructor : RoomDatabaseConstructor<VehicleDataba
     actual override fun initialize(): VehicleDatabase = throw NotImplementedError()
 }
 
-// ΤΕΛΙΚΟ ΤΕΣΤ ΓΙΑ ΤΟ GIT
+// ΤΕΛΙΚΟ ΤΕΣΤ ΓΙΑ ΤΟ GIT #@
