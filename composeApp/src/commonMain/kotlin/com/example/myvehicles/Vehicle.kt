@@ -1,9 +1,9 @@
-package com.example.myvehicles // Πρόσθεσε το package
+package com.example.myvehicles
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "vehicles") // Πρόσθεσε το tableName εδώ
+@Entity(tableName = "vehicles")
 data class Vehicle(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val brand: String,
@@ -21,4 +21,3 @@ data class Vehicle(
     val registrationPath: String? = null,
     val insurancePath: String? = null
 )
-

@@ -1,16 +1,14 @@
 package com.example.myvehicles
 
-import Vehicle
 import kotlinx.coroutines.flow.Flow
 
-// Ο Repository λειτουργεί ως ενδιάμεσος μεταξύ του DAO και του ViewModel
 class VehicleRepository(private val vehicleDao: VehicleDao) {
 
     // Επιστρέφει τη λίστα όλων των οχημάτων
     val allVehicles: Flow<List<Vehicle>> = vehicleDao.getAllVehicles()
 
-    // Αναζητά ένα συγκεκριμένο όχημα βάσει ID
-    fun getVehicleById(id: Int): Flow<Vehicle?> {
+    // ΔΙΟΡΘΩΣΗ: Αλλαγή από Int σε Long για να συμβαδίζει με το Vehicle Entity
+    fun getVehicleById(id: Long): Flow<Vehicle?> {
         return vehicleDao.getVehicleById(id)
     }
 
