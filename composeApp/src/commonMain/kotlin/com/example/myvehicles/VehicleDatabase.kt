@@ -11,5 +11,6 @@ abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
 
-// Αφαίρεσε το "override" αν υπάρχει, άφησέ το έτσι:
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase>
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
+    override fun initialize(): VehicleDatabase
+}
