@@ -115,8 +115,4 @@ dependencies {
     add("kspIosSimulatorArm64", roomCompiler)
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile> {
-    dependsOn("kspKotlinIosSimulatorArm64")
-    dependsOn("kspKotlinIosX64")
-    dependsOn("kspKotlinIosArm64")
-}
+kotlin.sourceSets.getByName("iosMain").kotlin.srcDir("build/generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin")
