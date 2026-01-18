@@ -61,7 +61,7 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
-        // Δημιουργία του ενδιάμεσου iosMain για κοινό κώδικα iOS
+        // Καθαρή δημιουργία του iosMain χωρίς χειροκίνητα srcDirs
         val iosMain by creating {
             dependsOn(commonMain.get())
         }
