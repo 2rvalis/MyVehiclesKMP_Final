@@ -64,11 +64,11 @@ kotlin {
         // Δημιουργία του ενδιάμεσου iosMain για κοινό κώδικα iOS
         val iosMain by creating {
             dependsOn(commonMain.get())
-            // Εδώ δηλώνουμε στον compiler πού να βρει τον generated κώδικα της Room
+            // Χρησιμοποιούμε μια πιο σίγουρη μέθοδο για τα paths του KSP στο iOS
             kotlin.srcDirs(
-                "build/generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin",
-                "build/generated/ksp/iosArm64/iosArm64Main/kotlin",
-                "build/generated/ksp/iosX64/iosX64Main/kotlin"
+                layout.buildDirectory.dir("generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin"),
+                layout.buildDirectory.dir("generated/ksp/iosArm64/iosArm64Main/kotlin"),
+                layout.buildDirectory.dir("generated/ksp/iosX64/iosX64Main/kotlin")
             )
         }
 
