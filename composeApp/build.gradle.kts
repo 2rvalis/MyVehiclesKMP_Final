@@ -104,8 +104,10 @@ room {
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Χρησιμοποιούμε τη γενική ksp για να βρει όλα τα targets αυτόματα
-    // Αυτό μειώνει τις πιθανότητες για Internal Compiler Error
+    // Room KSP - Ορίζουμε ρητά τα targets για να αποφύγουμε το KonanCompilationException
     val roomCompiler = libs.androidx.room.compiler
-    add("ksp", roomCompiler)
+    add("kspAndroid", roomCompiler)
+    add("kspIosSimulatorArm64", roomCompiler)
+    add("kspIosArm64", roomCompiler)
+    add("kspIosX64", roomCompiler)
 }
