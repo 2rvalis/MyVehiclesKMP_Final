@@ -64,12 +64,6 @@ kotlin {
         // Δημιουργία του ενδιάμεσου iosMain για κοινό κώδικα iOS
         val iosMain by creating {
             dependsOn(commonMain.get())
-            // Χρησιμοποιούμε μια πιο σίγουρη μέθοδο για τα paths του KSP στο iOS
-            kotlin.srcDirs(
-                layout.buildDirectory.dir("generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin"),
-                layout.buildDirectory.dir("generated/ksp/iosArm64/iosArm64Main/kotlin"),
-                layout.buildDirectory.dir("generated/ksp/iosX64/iosX64Main/kotlin")
-            )
         }
 
         // Σύνδεση των συγκεκριμένων targets με το iosMain
