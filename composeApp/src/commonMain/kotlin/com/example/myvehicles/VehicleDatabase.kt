@@ -1,10 +1,3 @@
-package com.example.myvehicles
-
-import androidx.room.ConstructedBy
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
-
 // commonMain
 @Database(entities = [Vehicle::class], version = 1)
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -12,7 +5,5 @@ abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
 
-// ΠΡΟΣΟΧΗ: Πρέπει να κληρονομεί από RoomDatabaseConstructor
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
-    override fun initialize(): VehicleDatabase // Πρόσθεσε αυτή τη γραμμή
-}
+// Αφαίρεσε το "override" αν υπάρχει, άφησέ το έτσι:
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase>
