@@ -27,6 +27,9 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // ΠΡΟΣΘΕΣΕ ΑΥΤΕΣ ΤΙΣ ΔΥΟ ΓΡΑΜΜΕΣ:
+            linkerOpts.add("-lsqlite3")
+            freeCompilerArgs += "-Xruntime-logs=gc=info"
         }
     }
 
