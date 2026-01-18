@@ -10,7 +10,3 @@ import androidx.room.RoomDatabaseConstructor
 abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
-
-// Η δήλωση expect ΠΡΕΠΕΙ να είναι εδώ.
-// ΜΗΝ βάζεις σώμα (δηλαδή { ... }) στην expect δήλωση.
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase>
