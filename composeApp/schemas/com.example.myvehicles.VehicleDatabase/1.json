@@ -1,0 +1,111 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "18079ff1824f1c5d8fa229ddd5b7fdbd",
+    "entities": [
+      {
+        "tableName": "vehicles",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `brand` TEXT NOT NULL, `model` TEXT NOT NULL, `color` TEXT NOT NULL, `kteoDate` TEXT NOT NULL, `tireSize` TEXT NOT NULL, `pressureFrontPsi` TEXT NOT NULL, `pressureFrontBar` TEXT NOT NULL, `pressureBackPsi` TEXT NOT NULL, `pressureBackBar` TEXT NOT NULL, `serviceInfo` TEXT NOT NULL, `imagePath` TEXT, `licensePlatePath` TEXT, `registrationPath` TEXT, `insurancePath` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "brand",
+            "columnName": "brand",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kteoDate",
+            "columnName": "kteoDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tireSize",
+            "columnName": "tireSize",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pressureFrontPsi",
+            "columnName": "pressureFrontPsi",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pressureFrontBar",
+            "columnName": "pressureFrontBar",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pressureBackPsi",
+            "columnName": "pressureBackPsi",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pressureBackBar",
+            "columnName": "pressureBackBar",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serviceInfo",
+            "columnName": "serviceInfo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imagePath",
+            "columnName": "imagePath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "licensePlatePath",
+            "columnName": "licensePlatePath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "registrationPath",
+            "columnName": "registrationPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "insurancePath",
+            "columnName": "insurancePath",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18079ff1824f1c5d8fa229ddd5b7fdbd')"
+    ]
+  }
+}
