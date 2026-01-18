@@ -27,8 +27,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            // ΠΡΟΣΘΕΣΕ ΑΥΤΕΣ ΤΙΣ ΔΥΟ ΓΡΑΜΜΕΣ:
-            linkerOpts.add("-lsqlite3")
+            // Σύνδεση με την SQLite του συστήματος iOS
+            linkerOpts("-lsqlite3")
             freeCompilerArgs += "-Xruntime-logs=gc=info"
         }
     }
@@ -61,17 +61,25 @@ kotlin {
             implementation(libs.androidx.core.ktx)
         }
 
-        // ΑΠΛΟΠΟΙΗΜΕΝΟ iOS Source Set
+        // Δημιουργία του ενδιάμεσου iosMain για κοινό κώδικα iOS
         val iosMain by creating {
             dependsOn(commonMain.get())
+            // Εδώ δηλώνουμε στον compiler πού να βρει τον generated κώδικα της Room
+            kotlin.srcDirs(
+                "build/generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin",
+                "build/generated/ksp/iosArm64/iosArm64Main/kotlin",
+                "build/generated/ksp/iosX64/iosX64Main/kotlin"
+            )
         }
 
+        // Σύνδεση των συγκεκριμένων targets με το iosMain
         iosX64Main.get().dependsOn(iosMain)
         iosArm64Main.get().dependsOn(iosMain)
         iosSimulatorArm64Main.get().dependsOn(iosMain)
     }
 
     compilerOptions {
+        // Απαραίτητο για το expect/actual της Room
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
@@ -98,7 +106,6 @@ android {
     }
 }
 
-// ΣΩΣΤΗ ΡΥΘΜΙΣΗ ROOM
 room {
     schemaDirectory("$projectDir/schemas")
     generateKotlin = true
@@ -107,12 +114,10 @@ room {
 dependencies {
     debugImplementation(compose.uiTooling)
 
-    // Χρησιμοποιούμε απευθείας το libs catalog ή το string αν δεν δουλεύει
+    // Ρύθμιση του KSP Compiler για όλους τους στόχους
     val roomCompiler = libs.androidx.room.compiler
     add("kspAndroid", roomCompiler)
     add("kspIosX64", roomCompiler)
     add("kspIosArm64", roomCompiler)
     add("kspIosSimulatorArm64", roomCompiler)
 }
-
-kotlin.sourceSets.getByName("iosMain").kotlin.srcDir("build/generated/ksp/iosSimulatorArm64/iosSimulatorArm64Main/kotlin")

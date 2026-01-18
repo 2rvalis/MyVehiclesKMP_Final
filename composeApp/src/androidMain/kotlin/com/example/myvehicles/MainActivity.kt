@@ -18,10 +18,10 @@ class MainActivity : ComponentActivity() {
             // Χρησιμοποιούμε τη συνάρτηση getDatabase() που ορίσαμε στο commonMain.
             // Αυτή η συνάρτηση καλεί εσωτερικά τον getDatabaseBuilder()
             // ο οποίος είναι διαφορετικός για Android και iOS (iPhone).
-            val database = remember { getDatabase() }
+            val database: VehicleDatabase = remember { getDatabase() }
 
             // Το Repository παίρνει το DAO από την κοινή βάση
-            val repository = remember { VehicleRepository(database.vehicleDao()) }
+            val repository: VehicleRepository = remember { VehicleRepository(database.vehicleDao()) }
 
             val viewModelFactory = VehicleViewModel.factory(repository)
 

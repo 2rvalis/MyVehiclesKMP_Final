@@ -9,10 +9,13 @@ import androidx.room.RoomDatabase
 @SuppressLint("StaticFieldLeak")
 lateinit var globalContext: Context
 
-actual fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> { // <--- Εδώ
-    val dbFile = globalContext.getDatabasePath("vehicles.db")
-    return Room.databaseBuilder<VehicleDatabase>( // <--- Και εδώ
-        context = globalContext.applicationContext,
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
+    // Χρησιμοποιούμε το applicationContext για να αποφύγουμε Memory Leaks
+    val context = globalContext.applicationContext
+    val dbFile = context.getDatabasePath("vehicles.db")
+
+    return Room.databaseBuilder<VehicleDatabase>(
+        context = context,
         name = dbFile.absolutePath
     )
 }
