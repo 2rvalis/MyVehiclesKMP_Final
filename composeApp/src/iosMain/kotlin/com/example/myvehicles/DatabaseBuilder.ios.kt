@@ -2,13 +2,14 @@ package com.example.myvehicles
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import platform.Foundation.NSHomeDirectory
 
-actual fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
-    val dbFilePath = NSHomeDirectory() + "/my_vehicles.db"
+fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
+    // Ορίζουμε το μονοπάτι για το αρχείο της βάσης στο iOS
+    val dbFilePath = NSHomeDirectory() + "/vehicles.db"
+
     return Room.databaseBuilder<VehicleDatabase>(
         name = dbFilePath,
-        factory = { VehicleDatabaseConstructor.initialize() }
-    ).setDriver(BundledSQLiteDriver())
+        factory = { AppDatabaseConstructor.initialize() }
+    )
 }
