@@ -1,15 +1,19 @@
 package com.example.myvehicles
 
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import platform.Foundation.NSHomeDirectory
+import androidx.room.RoomDatabaseConstructor
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<VehicleDatabase> {
-    // Ορίζουμε το μονοπάτι για το αρχείο της βάσης στο iOS
-    val dbFilePath = NSHomeDirectory() + "/vehicles.db"
+/**
+ * Η υλοποίηση του Constructor για το iOS.
+ * Χρησιμοποιούμε το @Suppress("NO_ACTUAL_FOR_EXPECT") γιατί η σύνδεση
+ * με την παραγόμενη κλάση της Room γίνεται κατά το compile time.
+ */
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+actual object AppDatabaseConstructor : RoomDatabaseConstructor<VehicleDatabase> {
 
-    return Room.databaseBuilder<VehicleDatabase>(
-        name = dbFilePath,
-        factory = { AppDatabaseConstructor.initialize() }
-    )
+    /**
+     * Υλοποιούμε τη συνάρτηση initialize που απαιτείται.
+     * Η instantiateImpl() είναι η εσωτερική συνάρτηση που δημιουργεί ο KSP
+     * για να "γεννήσει" την πραγματική βάση δεδομένων.
+     */
+    actual override fun initialize(): VehicleDatabase = instantiateImpl()
 }
