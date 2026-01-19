@@ -1,0 +1,35 @@
+# Gradle
+.gradle
+**/build/
+!src/**/build/
+build/
+
+# Kotlin / Kotlin Native
+.kotlin
+.konan/
+
+# Android Studio / IntelliJ
+.idea
+*.iml
+local.properties
+captures
+.externalNativeBuild
+.cxx
+
+# iOS / Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+.DS_Store
+xcuserdata/
+DerivedData/
+
+# Web (αν υπάρχει)
+node_modules/
+
+# Secrets (Προαιρετικά αν χρησιμοποιείς)
+*.jks
+*.keystore
