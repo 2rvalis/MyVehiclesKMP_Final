@@ -5,9 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.ConstructedBy
 import androidx.room.RoomDatabaseConstructor
 
+@ConstructedBy(AppDatabaseConstructor::class) // Μετακίνησέ το ΕΔΩ
 @Database(entities = [Vehicle::class], version = 1)
-// ΠΡΟΣΟΧΗ: Χρησιμοποιούμε το όνομα του object, ΧΩΡΙΣ backticks και ΧΩΡΙΣ .ios.kt
-@ConstructedBy(AppDatabaseConstructor::class)
 abstract class VehicleDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 }
